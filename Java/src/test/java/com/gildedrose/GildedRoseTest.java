@@ -47,5 +47,13 @@ class GildedRoseTest {
         app.updateQuality();
         assertEquals(50, app.items[0].quality);
     }
+    @Test
+    void elixir_of_the_Mongoose_quality_should_decrease_by_1() {
+        Item[] items = new Item[] { new Item("Elixir of the Mongoose", 5, 7) };
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(6, app.items[0].quality);
+    }
+
 
 }

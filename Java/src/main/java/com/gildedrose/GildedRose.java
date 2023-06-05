@@ -12,41 +12,59 @@ class GildedRose {
         for (Item item : items) {
             if (!isAgedBrie(item)
                 && !isBackstagePass(item)) {
-                if (item.quality > 0) {
+                if (hasQuality(item)) {
                     if (!isSulfuras(item)) {
-                        item.quality = item.quality - 1;
+                        item.quality = reduceQuality(item);
                     }
                 }
             } else {
                 if (item.quality < MAX_QUALITY) {
-                    item.quality = item.quality + 1;
+                    item.quality = increaseQuality(item);
 
                     if (isBackstagePass(item)) updateBackstageQualityBasedOnDueDate(item);
                 }
             }
 
             if (!isSulfuras(item)) {
-                item.sellIn = item.sellIn - 1;
+                item.sellIn = reduceSellIn(item);
             }
 
-            if (item.sellIn < 0) {
+            if (isSellInLessThanZero(item)) {
                 if (!isAgedBrie(item)) {
                     if (!isBackstagePass(item)) {
-                        if (item.quality > 0) {
-                            if (!isSulfuras(item)) {
-                                item.quality = item.quality - 1;
-                            }
+                        if (hasQuality(item) && !isSulfuras(item)) {
+                            item.quality = reduceQuality(item);
                         }
                     } else {
-                        item.quality = item.quality - item.quality;
+                        item.quality = 0;
                     }
                 } else {
                     if (item.quality < MAX_QUALITY) {
-                        item.quality = item.quality + 1;
+                        item.quality = increaseQuality(item);
                     }
                 }
             }
         }
+    }
+
+    private static boolean isSellInLessThanZero(Item item) {
+        return item.sellIn < 0;
+    }
+
+    private static int reduceSellIn(Item item) {
+        return item.sellIn - 1;
+    }
+
+    private static int increaseQuality(Item item) {
+        return item.quality + 1;
+    }
+
+    private static int reduceQuality(Item item) {
+        return item.quality - 1;
+    }
+
+    private static boolean hasQuality(Item item) {
+        return item.quality > 0;
     }
 
     private static boolean isSulfuras(Item item) {
@@ -59,11 +77,11 @@ class GildedRose {
 
     private static void updateBackstageQualityBasedOnDueDate(Item item) {
         if (item.sellIn < 11 && item.quality < MAX_QUALITY) {
-            item.quality = item.quality + 1;
+            item.quality = increaseQuality(item);
         }
 
         if (item.sellIn < 6 && item.quality < MAX_QUALITY) {
-            item.quality = item.quality + 1;
+            item.quality = increaseQuality(item);
         }
     }
 
