@@ -2,6 +2,7 @@ package com.gildedrose;
 
 class GildedRose {
     private static final int MAX_QUALITY = 50;
+    public static final int MIN_QUALITY = 0;
     Item[] items;
 
     public GildedRose(Item[] items) {
@@ -15,40 +16,35 @@ class GildedRose {
 
             if (isSellInLessThanZero(item)) {
                 if (isAgedBrie(item)) {
-                    if (item.quality < MAX_QUALITY) {
-                        item.quality = increaseQuality(item);
-                    }
+                    item.quality = increaseQuality(item);
                 } else {
                     if (isBackstagePass(item)) {
-                        item.quality = 0;
-                    } else if (hasQuality(item)) {
+                        item.quality = MIN_QUALITY;
+                    } else {
                         item.quality = reduceQuality(item);
                     }
                 }
             }
 
             if (isBackstagePass(item)) {
-                if (item.quality < MAX_QUALITY) {
-                    item.quality = increaseQuality(item);
-                    if (isBackstagePass(item)) updateBackstageQualityBasedOnDueDate(item);
-                }
+                item.quality = increaseQuality(item);
+                if (isBackstagePass(item)) updateBackstageQualityBasedOnDueDate(item);
+
             } else {
                 if (isAgedBrie(item)) {
-                    if (item.quality < MAX_QUALITY) {
-                        item.quality = increaseQuality(item);
-                        if (isBackstagePass(item)) updateBackstageQualityBasedOnDueDate(item);
-                    }
+                    item.quality = increaseQuality(item);
+                    if (isBackstagePass(item)) updateBackstageQualityBasedOnDueDate(item);
+
                 } else {
-                    if (hasQuality(item)) {
-                        item.quality = reduceQuality(item);
-                    }
+                    item.quality = reduceQuality(item);
+
                 }
             }
         }
     }
 
     private static boolean isSellInLessThanZero(Item item) {
-        return item.sellIn < 0;
+        return item.sellIn < MIN_QUALITY;
     }
 
     private static int reduceSellIn(Item item) {
@@ -56,15 +52,11 @@ class GildedRose {
     }
 
     private static int increaseQuality(Item item) {
-        return item.quality + 1;
+        return Math.min(item.quality + 1, MAX_QUALITY);
     }
 
     private static int reduceQuality(Item item) {
-        return item.quality - 1;
-    }
-
-    private static boolean hasQuality(Item item) {
-        return item.quality > 0;
+        return Math.max(item.quality - 1, MIN_QUALITY);
     }
 
     private static boolean isSulfuras(Item item) {
