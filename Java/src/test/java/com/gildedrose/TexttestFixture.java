@@ -2,7 +2,12 @@ package com.gildedrose;
 
 public class TexttestFixture {
     public static void main(String[] args) {
-        System.out.println("OMGHAI!");
+        executeFixture(args);
+    }
+
+    public static String executeFixture(String[] args) {
+        StringBuffer result = new StringBuffer();
+        result.append("OMGHAI!");
 
         Item[] items = new Item[] {
                 new Item("+5 Dexterity Vest", 10, 20), //
@@ -24,14 +29,15 @@ public class TexttestFixture {
         }
 
         for (int i = 0; i < days; i++) {
-            System.out.println("-------- day " + i + " --------");
-            System.out.println("name, sellIn, quality");
+            result.append("-------- day " + i + " --------\n");
+            result.append("name, sellIn, quality\n");
             for (Item item : items) {
-                System.out.println(item);
+                result.append(item +"\n");
             }
-            System.out.println();
+            result.append("\n");
             app.updateQuality();
         }
+        return result.toString();
     }
 
 }
