@@ -61,6 +61,34 @@ class GildedRoseTest {
         app.updateQuality();
         assertEquals(5, app.items[0].sellIn);
     }
+    @Test
+    void Hand_of_Sulfuras_never_reduces_quality() {
+        Item[] items = new Item[] { new Item("Sulfuras, Hand of Ragnaros", 5, 7) };
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(7, app.items[0].quality);
+    }
+    @Test
+    void aged_brie_reduces_sellIn_when_a_day_passes() {
+        Item[] items = new Item[] { new Item("Aged Brie", 5, 7) };
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(4, app.items[0].sellIn);
+    }
+    @Test
+    void backstage_reduces_sellIn__when_a_day_passes() {
+        Item[] items = new Item[] { new Item("backstage", 5, 7) };
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(4, app.items[0].sellIn);
+    }
+    @Test
+    void elixir_of_the_Mongoose_sellIn_should_decrease_by_1() {
+        Item[] items = new Item[] { new Item("Elixir of the Mongoose", 5, 7) };
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(4, app.items[0].sellIn);
+    }
 
 
 }

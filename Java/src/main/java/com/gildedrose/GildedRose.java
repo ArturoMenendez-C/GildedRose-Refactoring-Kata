@@ -10,10 +10,8 @@ class GildedRose {
 
     public void updateQuality() {
         for (Item item : items) {
-            if (isSulfuras(item)) {
-            } else {
-                item.sellIn = reduceSellIn(item);
-            }
+            if (isSulfuras(item)) continue;
+            item.sellIn = reduceSellIn(item);
 
             if (isSellInLessThanZero(item)) {
                 if (isAgedBrie(item)) {
