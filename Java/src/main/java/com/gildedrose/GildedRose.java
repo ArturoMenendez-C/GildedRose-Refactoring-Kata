@@ -21,7 +21,7 @@ class GildedRose {
                 } else {
                     if (isBackstagePass(item)) {
                         item.quality = 0;
-                    } else if (hasQuality(item) && !isSulfuras(item)) {
+                    } else if (hasQuality(item)) {
                         item.quality = reduceQuality(item);
                     }
                 }
@@ -39,7 +39,7 @@ class GildedRose {
                         if (isBackstagePass(item)) updateBackstageQualityBasedOnDueDate(item);
                     }
                 } else {
-                    if (hasQuality(item) && !isSulfuras(item)) {
+                    if (hasQuality(item)) {
                         item.quality = reduceQuality(item);
                     }
                 }
