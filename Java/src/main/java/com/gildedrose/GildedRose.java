@@ -10,37 +10,39 @@ class GildedRose {
 
     public void updateQuality() {
         for (Item item : items) {
-            if (!isAgedBrie(item)
-                && !isBackstagePass(item)) {
-                if (hasQuality(item)) {
-                    if (!isSulfuras(item)) {
-                        item.quality = reduceQuality(item);
-                    }
-                }
+            if (isSulfuras(item)) {
             } else {
-                if (item.quality < MAX_QUALITY) {
-                    item.quality = increaseQuality(item);
-
-                    if (isBackstagePass(item)) updateBackstageQualityBasedOnDueDate(item);
-                }
-            }
-
-            if (!isSulfuras(item)) {
                 item.sellIn = reduceSellIn(item);
             }
 
             if (isSellInLessThanZero(item)) {
-                if (!isAgedBrie(item)) {
-                    if (!isBackstagePass(item)) {
-                        if (hasQuality(item) && !isSulfuras(item)) {
-                            item.quality = reduceQuality(item);
-                        }
-                    } else {
-                        item.quality = 0;
-                    }
-                } else {
+                if (isAgedBrie(item)) {
                     if (item.quality < MAX_QUALITY) {
                         item.quality = increaseQuality(item);
+                    }
+                } else {
+                    if (isBackstagePass(item)) {
+                        item.quality = 0;
+                    } else if (hasQuality(item) && !isSulfuras(item)) {
+                        item.quality = reduceQuality(item);
+                    }
+                }
+            }
+
+            if (isBackstagePass(item)) {
+                if (item.quality < MAX_QUALITY) {
+                    item.quality = increaseQuality(item);
+                    if (isBackstagePass(item)) updateBackstageQualityBasedOnDueDate(item);
+                }
+            } else {
+                if (isAgedBrie(item)) {
+                    if (item.quality < MAX_QUALITY) {
+                        item.quality = increaseQuality(item);
+                        if (isBackstagePass(item)) updateBackstageQualityBasedOnDueDate(item);
+                    }
+                } else {
+                    if (hasQuality(item) && !isSulfuras(item)) {
+                        item.quality = reduceQuality(item);
                     }
                 }
             }
