@@ -97,14 +97,14 @@ class GildedRoseTest {
         assertEquals(50, app.items[0].quality);
     }
     @Test
-    void elixir_of_the_Mongoose_quality_should_not_be_less_than_zero() {
+    void item_quality_should_not_be_less_than_zero() {
         Item[] items = new Item[] { new Item("Elixir of the Mongoose", 5, 0) };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         assertEquals(0, app.items[0].quality);
     }
     @Test
-    void aged_brie_quality_should_not_be_more_than_50() {
+    void item_quality_should_not_be_more_than_50() {
         Item[] items = new Item[] { new Item("Aged Brie", 5, 50) };
         GildedRose app = new GildedRose(items);
         app.updateQuality();

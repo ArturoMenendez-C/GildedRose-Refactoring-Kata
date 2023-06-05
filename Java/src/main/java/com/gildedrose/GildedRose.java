@@ -28,13 +28,11 @@ class GildedRose {
 
             if (isBackstagePass(item)) {
                 item.quality = increaseQuality(item);
-                if (isBackstagePass(item)) updateBackstageQualityBasedOnDueDate(item);
+                updateBackstageQualityBasedOnDueDate(item);
 
             } else {
                 if (isAgedBrie(item)) {
                     item.quality = increaseQuality(item);
-                    if (isBackstagePass(item)) updateBackstageQualityBasedOnDueDate(item);
-
                 } else {
                     item.quality = reduceQuality(item);
 
@@ -44,7 +42,7 @@ class GildedRose {
     }
 
     private static boolean isSellInLessThanZero(Item item) {
-        return item.sellIn < MIN_QUALITY;
+        return item.sellIn < 0;
     }
 
     private static int reduceSellIn(Item item) {
